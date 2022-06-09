@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户信息</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/js/layui/css/layui.css}">
+    <script type="text/javascript" th:src="@{/js/jquery/jquery-1.11.3.js}"></script>
+    <script type="text/javascript" th:src="@{/js/layui/layui.js}"></script>
+    <script type="text/javascript" th:src="@{/js/echarts/echarts.min.js}"></script>
+    <link th:include="common :: commonheader">
+</head>
+<body class="sticky-header">
+<section>
+<div th:replace="common :: #leftmenu"></div>
+<div class="main-content" >
+    <div th:replace="common :: headermenu"></div>
+    <div class="page-heading">
+    <div class="layui-row" style="padding: 10px;">
+        <div class="layui-form">
+            <div class="layui-inline">
+                <div class="layui-form-item">
+                    <div class="layui-input-inline">
+                        <input class="layui-input" id="keywords" type="text" placeholder="用户名">
+                    </div>
+                    <div class="layui-input-inline">
+                        <button class="layui-btn" onclick="logSearch()" data-type="reload">查询</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<div class="layui-row">
+    <div class="layui-col-xs12">
+        <table class="layui-hide" id="tbLog" lay-filter="tlbLog"></table>
+    </div>
+</div></div>
+</div>
+</section>
+<div th:include="common :: #commonscript"></div>
+</div>
+</body>
+<script type="application/javascript" th:inline="none">
+    var layer;
+    var element;
+    var table;
+    var laydate;
+    var form;
+    layui.use(['element', 'layer', 'table', 'laydate', 'form'], function () {
+        table = layui.table;//表格
+        layer = layui.layer;//弹层
+        element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+        form = layui.form;
+        form.render();
+        initPage();
+    });
+    //页面初始化
+    function initPage() {
+        table.render({
+            id: "log",
+            elem: '#tbLog',
+            height: 550,
+            method: 'post',
+            limit: 10,
+            limits: [10,100],
+            url: '/toolcontroller/allUser',//数据接口
+            where: {
+                keywords: $("#keywords").val()
+            },
+            title: '日志管理',
+            page: true, //开启分页
+            toolbar: 'default', //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+            totalRow: false, //开启合计行
+            cols: [[{
+                field: 'id', fixed: 'left', title: '序号', width: '20%'
+            }, {
+                field: 'username', fixed: 'left', title: '用户名', width: '40%'
+            }, {
+                field: 'email', fixed: 'left', title: '邮箱', width: '40%'
+            }
+            ]]
+        });
+    }
+
+    //监听头工具栏事件
+    table.on('toolbar(tbLog)', function (obj) {
+        var checkStatus = table.checkStatus(obj.config.id)
+            , data = checkStatus.data; //获取选中的数据
+        switch (obj.event) {
+            case 'add':
+                layer.open({
+                    type: 1,
+                    title: "添加用户信息",
+                    content: $("#edit-main"),
+                    closeBtn: 1,
+                    area: ['500px', '400px'],
+                    offset: 'auto',
+                    shade: [0.4, '#393D49'],
+                    shadeClose: false,
+                    btn: ['更新', '取消'],
+                    btnAlign: 'c',
+                    icon: 2,
+                    success: function (layero, index) {
+                        $(".layui-layer-shade").css("display", "none");
+                        // $("#jgmc").val(data[0].zzjgmc);
+                        // $("#zzjgdm").val(data[0].zzjgdm);
+                        form.render();
+                    },
+                    yes: function () {
+                        var obj = {};
+                        obj.user = $("#user").val();
+                        obj.password = $("#password").val();
+                        obj.email = $("#email").val();
+                        var classify = $("#edition").val();
+                        if(obj.user=='' || obj.password=='' || obj.email=='' || obj.user==null || obj.password==null || obj.email==null){
+                            layer.msg("所有信息不能为空")
+                        }else {
+                            $.ajax({
+                                type: "POST",
+                                url: "/toolcontroller/letterFirstlower",
+                                dataType: "text",
+                                data: {"text": $("#intext").val()},
+                                success: function (data) {
+                                    //调用参数名，date就为返回的json数据
+                                    $("#puttext").val(data);
+                                }
+                            })
+                        }
+                        HttpProxy.postJson("/org/selectOrgIdByClassify", classify, function (res) {
+                            debugger;
+                            obj.clinical_rule_ids = res.data.clinical_rule_ids;
+                            obj.medical_rule_ids = res.data.medical_rule_ids;
+                            HttpProxy.postJson("/org/updateOrgByClassify", obj, function (res) {
+                                layer.close(layer.index);
+                                layer.msg(res.msg);
+                                $("#edit-form")[0].reset();
+                                tbReload();
+                            })
+                        })
+
+                    },
+                    btn2: function (index, layero) {
+                        $("#edit-form")[0].reset();
+                    }
+                });
+            case 'update':
+                if (data.length === 0) {
+                    layer.msg('请选择一行');
+                } else if (data.length > 1) {
+                    layer.msg('只能同时编辑一个');
+                } else {
+                    layer.open({
+                        type: 1,
+                        title: "修改用户信息",
+                        content: $("#edit-main"),
+                        closeBtn: 1,
+                        area: ['500px', '400px'],
+                        offset: 'auto',
+                        shade: [0.4, '#393D49'],
+                        shadeClose: false,
+                        btn: ['更新', '取消'],
+                        btnAlign: 'c',
+                        icon: 2,
+                        success: function (layero, index) {
+                            $(".layui-layer-shade").css("display", "none");
+                            $("#jgmc").val(data[0].zzjgmc);
+                            $("#zzjgdm").val(data[0].zzjgdm);
+                            form.render();
+                        },
+                        yes: function () {
+                            var obj = {};
+                            obj.zzjgdm = $("#zzjgdm").val();
+                            obj.zzjgmc = $("#jgmc").val();
+                            var classify = $("#edition").val();
+                            HttpProxy.postJson("/org/selectOrgIdByClassify", classify, function (res) {
+                                debugger;
+                                obj.clinical_rule_ids = res.data.clinical_rule_ids;
+                                obj.medical_rule_ids = res.data.medical_rule_ids;
+                                HttpProxy.postJson("/org/updateOrgByClassify", obj, function (res) {
+                                    layer.close(layer.index);
+                                    layer.msg(res.msg);
+                                    $("#edit-form")[0].reset();
+                                    tbReload();
+                                })
+                            })
+
+                        },
+                        btn2: function (index, layero) {
+                            $("#edit-form")[0].reset();
+                        }
+                    });
+                }
+                break;
+            case 'delete':
+                break;
+        }
+    });
+
+
+    function logSearch() {
+        table.reload('log', {
+            page: {
+                curr: 1 //重新从第 1 页开始
+            },
+            where: {
+                keywords: $("#keywords").val()
+            }
+        });
+    }
+
+
+</script>
+<div id="edit-main" style="display: none;">
+    <form class="layui-form" id="edit-form" style="margin-top: 5px;">
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 120px">用户名</label>
+            <div class="layui-input-block">
+                <input type="text" id="user" style="width: 280px" disabled autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 120px">密码</label>
+            <div class="layui-input-inline">
+                <input type="text" id="password" style="width: 280px" disabled autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 120px">邮箱</label>
+            <div class="layui-input-inline">
+                <select style="width: 120px" id="email" name="edition" lay-filter='selectZzjg'
+                        lay-verify="type" lay-search>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>
+</html>

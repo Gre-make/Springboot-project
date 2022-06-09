@@ -1,0 +1,105 @@
+server:
+  port: 8585
+spring:
+  application:
+    name: nacos-server-test
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        namespace: 922955be-03be-4ac6-a227-9d0d34ae0a24
+        group: nacos-server-test
+        file-extension: properties
+
+
+
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://114.116.119.246:3307/book?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: root
+    password: wz123000
+  jdbc:
+    template:
+      query-timeout: 3
+
+
+
+  druid:
+    aop-patterns: com.lwc.admin.*  #springbean监控
+    filters: stat,wall,slf4j  #所有开启的功能
+
+    stat-view-servlet: #监控页配置
+      enabled: true
+      login-username: admin
+      login-password: admin
+      resetEnable: false
+
+    web-stat-filter: #web监控
+      enabled: true
+      urlPattern: /*
+      exclusions: '*.html,*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+
+
+    filter:
+      stat: #sql监控
+        slow-sql-millis: 1000
+        logSlowSql: true
+        enabled: true
+      wall: #防火墙
+        enabled: true
+        config:
+          drop-table-allow: false
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
+
+
+# 配置mybatis规则、使用MyBatisPlus则此项配置无效
+mybatis:
+  #  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
+
+
+management:
+  endpoints:
+    enabled-by-default: false
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+      enabled: true
+    info:
+      enabled: true
+    beans:
+      enabled: true
+
+info:
+  appName: boot-admin
+  appVersion: 1.0.0
+  mavenProjectName: springboot-web-admin
+  mavenProjectVersion: 0.0.1-SNAPSHOT
+
+
+#熔断器
+feign:
+  hystrix:
+    enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: 5000  # 指定Feign连接提供者的超时时限
+        readTimeout: 5000
+
+
+
+
+
