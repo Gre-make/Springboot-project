@@ -53,14 +53,14 @@
 
         <!--sidebar nav start-->
         <ul class="nav nav-pills nav-stacked custom-nav">
-<!--            <li><a th:href="@{/main.html}"><i class="fa fa-home"></i> <span>Dashboard</span></a></li>-->
-            <li><a th:href="@{/main.html}"><i class="fa fa-home"></i> <span>工具箱</span></a></li>
+            <li><a th:href="@{/home_page.html}"><i class="fa fa-home"></i> <span>home</span></a></li>
+
+            <li><a th:href="@{/main.html}"><i class="fa fa-home"></i> <span>utilBox</span></a></li>
             <li class="menu-list"><a href=""><i class="fa fa-laptop"></i> <span>Layouts</span></a>
                 <ul class="sub-menu-list">
                     <li><a href="boxed_view.html"> Boxed Page</a></li>
                     <li><a href="leftmenu_collapsed_view.html"> Sidebar Collapsed</a></li>
                     <li><a href="horizontal_menu.html"> Horizontal Menu</a></li>
-
                 </ul>
             </li>
             <li class="menu-list"><a href=""><i class="fa fa-book"></i> <span>UI Elements</span></a>
@@ -83,9 +83,11 @@
 
                 </ul>
             </li>
-
-            <li><a href="fontawesome.html"><i class="fa fa-bullhorn"></i> <span>Fontawesome</span></a></li>
-
+            <li class="menu-list"><a href=""><i class="fa fa-cogs"></i> <span>JsonUtil</span></a>
+                <ul class="sub-menu-list">
+                    <li><a th:href="@{/jsonFormat}"> jsonFormat</a></li>
+                </ul>
+            </li>
             <li class="menu-list"><a href=""><i class="fa fa-envelope"></i> <span>Mail</span></a>
                 <ul class="sub-menu-list">
                     <li><a href="mail.html"> Inbox</a></li>
@@ -98,55 +100,8 @@
                 <ul class="sub-menu-list">
                     <li><a th:href="@{/form_layouts}"> Form Layouts</a></li>
                     <li><a th:href="@{/data_table}"> Data</a></li>
-                    <li><a href="form_wizard.html"> Form Wizards</a></li>
-                    <li><a href="form_validation.html"> Form Validation</a></li>
-                    <li><a href="editors.html"> Editors</a></li>
-                    <li><a href="inline_editors.html"> Inline Editors</a></li>
-                    <li><a href="pickers.html"> Pickers</a></li>
-                    <li><a href="dropzone.html"> Dropzone</a></li>
                 </ul>
             </li>
-            <li class="menu-list"><a href=""><i class="fa fa-bar-chart-o"></i> <span>Charts</span></a>
-                <ul class="sub-menu-list">
-                    <li><a href="flot_chart.html"> Flot Charts</a></li>
-                    <li><a href="morris.html"> Morris Charts</a></li>
-                    <li><a href="chartjs.html"> Chartjs</a></li>
-                    <li><a href="c3chart.html"> C3 Charts</a></li>
-                </ul>
-            </li>
-<!--            <li class="menu-list nav-active"><a href="#"><i class="fa fa-th-list"></i> <span>Data Tables</span></a>-->
-<!--                <ul class="sub-menu-list">-->
-<!--                    <li><a  th:href="@{/basic_table}"> Basic Table</a></li>-->
-<!--                    <li><a th:href="@{/dynamic_table}"  > Advanced Table</a></li>-->
-<!--                    <li><a th:href="@{/responsive_table}" > Responsive Table</a></li>-->
-<!--                    <li><a th:href="@{/editable_table}" > Edit Table</a></li>-->
-<!--                </ul>-->
-<!--            </li>-->
-
-            <li class="menu-list"><a href="#"><i class="fa fa-map-marker"></i> <span>Maps</span></a>
-                <ul class="sub-menu-list">
-                    <li><a href="google_map.html"> Google Map</a></li>
-                    <li><a href="vector_map.html"> Vector Map</a></li>
-                </ul>
-            </li>
-            <li class="menu-list"><a href=""><i class="fa fa-file-text"></i> <span>Extra Pages</span></a>
-                <ul class="sub-menu-list">
-                    <li><a href="profile.html"> Profile</a></li>
-                    <li><a href="invoice.html"> Invoice</a></li>
-                    <li><a href="pricing_table.html"> Pricing Table</a></li>
-                    <li><a href="timeline.html"> Timeline</a></li>
-                    <li><a href="blog_list.html"> Blog List</a></li>
-                    <li><a href="blog_details.html"> Blog Details</a></li>
-                    <li><a href="directory.html"> Directory </a></li>
-                    <li><a href="chat.html"> Chat </a></li>
-                    <li><a href="404.html"> 404 Error</a></li>
-                    <li><a href="500.html"> 500 Error</a></li>
-                    <li><a href="registration.html"> Registration Page</a></li>
-                    <li><a href="lock_screen.html"> Lockscreen </a></li>
-                </ul>
-            </li>
-            <li><a href="login.html"><i class="fa fa-sign-in"></i> <span>Login Page</span></a></li>
-
         </ul>
         <!--sidebar nav end-->
 

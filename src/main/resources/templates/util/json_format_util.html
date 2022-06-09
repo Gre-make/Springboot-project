@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户信息</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/js/layui/css/layui.css}">
+    <script type="text/javascript" th:src="@{/js/jquery/jquery-1.11.3.js}"></script>
+    <script type="text/javascript" th:src="@{/js/layui/layui.js}"></script>
+    <script type="text/javascript" th:src="@{/js/echarts/echarts.min.js}"></script>
+    <link th:include="common :: commonheader">
+</head>
+<body class="sticky-header">
+<section>
+    <div th:replace="common :: #leftmenu"></div>
+    <div class="main-content" >
+        <div class="page-heading">
+            <div class="layui-row" style="padding: 10px;">
+                <div class="layui-form">
+                    <div class="layui-inline">
+                        <div class="layui-form-item">
+                            <div class="layui-input-inline">
+                                <button class="layui-btn" onclick="format()" data-type="reload">json格式化</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <textarea id="edit" type="text"  style="width:1200px;height:3000px;overflow-x:visible;overflow-y:visible;"></textarea>
+        </div>
+</section>
+<div th:include="common :: #commonscript"></div>
+</div>
+</body>
+<script type="application/javascript" th:inline="none">
+    var layer;
+    var element;
+    var table;
+    var laydate;
+    var form;
+    layui.use(['element', 'layer', 'table', 'laydate', 'form'], function () {
+        table = layui.table;//表格
+        layer = layui.layer;//弹层
+        element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+        form = layui.form;
+        form.render();
+        initPage();
+    });
+
+    function format() {
+        $.ajax({
+            url: "/toolcontroller/jsonFormat",
+            type: 'post',
+            dataType: 'text',
+            data: {"intext": $("#edit").val()},
+            success: function (data) {
+                $("#edit").val(data);
+                form.render();
+            }
+        });
+
+    }
+
+
+</script>
+</html>
