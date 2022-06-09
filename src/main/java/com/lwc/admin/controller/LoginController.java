@@ -47,12 +47,12 @@ public class LoginController {
     //避免表单重复提交
     @GetMapping("/main.html")
     public String mainPage(HttpSession session, Model model) {
-        log.info("当前方式是{}", "mainPage");
-        Object loginUser = session.getAttribute("loginUser");
-        if (StringUtils.isEmpty(loginUser)) {
-            model.addAttribute("msg", "请重新登录");
-            return "login";
-        }
+//        log.info("当前方式是{}", "mainPage");
+//        Object loginUser = session.getAttribute("loginUser");
+//        if (StringUtils.isEmpty(loginUser)) {
+//            model.addAttribute("msg", "请重新登录");
+//            return "login";
+//        }
         return "main";
     }
 
