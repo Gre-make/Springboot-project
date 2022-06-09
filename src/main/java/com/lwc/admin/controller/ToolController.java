@@ -4,6 +4,7 @@ package com.lwc.admin.controller;
 import com.lwc.admin.bean.vo.PageEntity;
 import com.lwc.admin.service.AdminService;
 import com.lwc.admin.service.FunctionSelectService;
+import com.lwc.admin.util.JsonFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -183,4 +184,19 @@ public class ToolController {
 
     }
 
+    /**
+     * json格式化
+     *
+     * @param intext
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/jsonFormat")
+    public String jsonFormat(String intext) {
+        String result=intext;
+        if (StringUtils.isNotEmpty(intext)){
+                result = new JsonFormat().jsonFormat(intext) ;
+        }
+       return result;
+    }
 }

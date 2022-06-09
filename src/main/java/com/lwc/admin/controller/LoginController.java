@@ -34,7 +34,7 @@ public class LoginController {
             Integer cnt = adminService.getAdmin(user.getUserName(), user.getPassword());
             if (cnt > 0) {
                 session.setAttribute("loginUser", user);
-                return "redirect:/main.html";//登录成功就去首页
+                return "redirect:/home_page.html";//登录成功就去首页
             } else {
                 model.addAttribute("msg", "账号或者密码错误");
             }
@@ -54,6 +54,18 @@ public class LoginController {
             return "login";
         }
         return "main";
+    }
+
+    //避免表单重复提交
+    @GetMapping("/home_page.html")
+    public String homePage(HttpSession session, Model model) {
+        log.info("当前方式是{}", "homePage");
+        Object loginUser = session.getAttribute("loginUser");
+        if (StringUtils.isEmpty(loginUser)) {
+            model.addAttribute("msg", "请重新登录");
+            return "login";
+        }
+        return "home_page";
     }
 
 }

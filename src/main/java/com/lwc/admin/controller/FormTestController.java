@@ -35,6 +35,11 @@ public class FormTestController {
         return "error/ultra_vires.html";
     }
 
+    @GetMapping("/jsonFormat")
+    public String jsonFormat(){
+        return "util/json_format_util.html";
+    }
+
     @PostMapping("/upload")
     public String upload(@RequestParam("email") String email,
                          @RequestParam("username") String username,
