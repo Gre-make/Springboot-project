@@ -175,7 +175,6 @@
                             obj.zzjgmc = $("#jgmc").val();
                             var classify = $("#edition").val();
                             HttpProxy.postJson("/org/selectOrgIdByClassify", classify, function (res) {
-                                debugger;
                                 obj.clinical_rule_ids = res.data.clinical_rule_ids;
                                 obj.medical_rule_ids = res.data.medical_rule_ids;
                                 HttpProxy.postJson("/org/updateOrgByClassify", obj, function (res) {

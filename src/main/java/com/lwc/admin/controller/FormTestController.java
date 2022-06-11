@@ -24,6 +24,12 @@ public class FormTestController {
         return "form/form_layouts";
     }
 
+    @GetMapping("/notePage")
+    public String basic_table() {
+        return "form/note_page";
+    }
+
+
     @GetMapping("/data_table")
     public String data_table(HttpSession session){
         //获取用户信息，判断用户是否可以访问该页面

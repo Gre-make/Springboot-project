@@ -15,27 +15,14 @@
 <body class="sticky-header">
 <section>
     <div th:replace="common :: #leftmenu"></div>
-<div class="main-content" >
-    <div th:replace="common :: headermenu"></div>
-    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
-        <legend>系统简介</legend>
-    </fieldset>
-    <div class="layui-collapse" lay-accordion="">
-        <div class="layui-colla-item">
-            <h2 class="layui-colla-title">项目简介</h2>
-            <div class="layui-colla-content layui-show">
-                <p>听我说谢谢你，因为有你，温暖了四季</p>
-            </div>
-        </div>
-        <div class="layui-colla-item">
-            <h2 class="layui-colla-title">简介</h2>
-            <div class="layui-colla-content">
-                <p>待定</p>
-            </div>
-        </div>
+    <div class="main-content" >
+        <div th:replace="common :: headermenu"></div>
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+            <legend>笔记</legend>
+        </fieldset>
+        <div class="layui-collapse" lay-accordion="" id="note_text"></div>
     </div>
-</div>
-<div th:include="common :: #commonscript"></div>
+    <div th:include="common :: #commonscript"></div>
 </section>
 </body>
 <script type="application/javascript" th:inline="none">
@@ -49,9 +36,32 @@
         layer = layui.layer;//弹层
         element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
         form = layui.form;
+        sta();
         form.render();
-        initPage();
+
     });
+
+    function sta() {
+            $.ajax({
+                url: "/diary/getNote",
+                type: 'post',
+                dataType: 'json',
+                data: {},
+                success: function (data) {
+                    var rightstr="";
+                    for (var i=0;i<data.length;i++){
+                        rightstr += "<div class='layui-colla-item'> <h2 class='layui-colla-title'>"
+                            + data[i].title + " </h2> " +
+                            "<div class='layui-colla-content'>"
+                            + data[i].content + "</div></div>"
+                    }
+                    $(".layui-collapse").html(rightstr);
+                    layui.element.init();
+                }
+            });
+    }
+
+
 
 </script>
 </html>
