@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Component
 public class Hysitx implements FallbackFactory<IRemoteCallService> {
 
-    //这是一段使用熔断器的测试代码
     @Override
     public IRemoteCallService create(Throwable cause) {
         return new IRemoteCallService(){
