@@ -1,6 +1,7 @@
 package com.lwc.admin.Hystrix;
 
 
+import com.lwc.admin.bean.Admin;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,9 +18,6 @@ public class HysitxTest implements IRemoteCallService {
     }
 
     public static void main(String[] args) {
-       Integer a=null;
-       if ( a!=null && a<28 ) {
-           System.out.println(a < 28);
-       }
+        Admin admin = new Admin();
     }
 }
