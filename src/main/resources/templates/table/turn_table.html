@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        margin:0;
+        padding:0;
+    }
+
+    body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+
+    .outher{
+        width:300px;
+        height: 300px;
+        position: relative;
+        border-radius: 50%;
+    }
+
+    .wapper{
+        width:300px;
+        height: 300px;
+        border-radius: 50%;
+        overflow: hidden;
+        background-color: black;
+        transform:rotate(22.5deg);
+    }
+
+    .left{
+        position: absolute;
+        width: 150px;
+        height: 300px;
+        left:0;
+        overflow: hidden;
+    }
+
+    .left .text{
+        position: absolute;
+        top:30px;
+        left:55%;
+        transform:rotate(-22.5deg);
+        text-align: center;
+    }
+
+    .right .text{
+        position: absolute;
+        top:25px;
+        left:11%;
+        transform:rotate(22.5deg);
+        text-align: center;
+    }
+
+
+    .right{
+        position: absolute;
+        width: 150px;
+        height: 300px;
+        right:0;
+        overflow: hidden;
+        text-align: center;
+    }
+
+
+    .left div{
+        position: absolute;
+        top:0;
+        left:0;
+        width: 100%;
+        height: 100%;
+        transform-origin: right center;
+    }
+
+    .left div.one{
+        background-color: #FC7C7B;
+    }
+
+
+    .left div.two{
+        background-color: #F59462;
+        transform:rotate(-45deg);
+    }
+
+    .left div.three{
+        background-color: #FC7C7B;
+        transform:rotate(-90deg);
+    }
+
+    .left div.four{
+        background-color: #F59462;
+        transform:rotate(-135deg);
+    }
+
+
+    .right div{
+        position: absolute;
+        top:0;
+        left:0;
+        width: 100%;
+        height: 100%;
+        transform-origin: left center;
+    }
+
+
+    .right div.one{
+        background-color: #F59462;
+    }
+
+
+    .right div.two{
+        background-color: #FC7C7B;
+        transform:rotate(45deg);
+    }
+
+    .right div.three{
+        background-color: #F59462;;
+        transform:rotate(90deg);
+    }
+
+    .right div.four{
+
+        background-color: #FC7C7B;
+        transform:rotate(135deg);
+    }
+
+    .circle{
+        width: 100px;
+        height: 100px;
+        background-color:#F27F2E ;
+        position: absolute;
+        left:50%;
+        top:50%;
+        transform:translate(-50%,-50%);
+        border-radius: 50%;
+        text-align: center;
+        line-height: 100px;
+        font-size: 30px;
+        font-weight: bold;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .circle:after{
+        width: 0;
+        height: 0;
+        border:40px solid #F27F2E ;;
+        border-left-width: 10px;
+        border-right-width: 10px;
+        position: absolute;
+        content:"";
+        border-left-color: transparent;
+        border-top-color: transparent;
+        border-right-color: transparent;
+        top:-70px;
+        left:calc(50% - 10px);
+        z-index: -1;
+    }
+</style>
+<body>
+
+<div class="outher">
+    <div class="wapper">
+        <div class="left">
+            <div class="one"> <span class="text"></span></div>
+            <div class="two"> <span class="text"></span></div>
+            <div class="three"> <span class="text"></span></div>
+            <div class="four"> <span class="text"></span></div>
+        </div>
+        <div class="right">
+            <div class="one"> <span class="text"></span></div>
+            <div class="two"> <span class="text"></span></div>
+            <div class="three"> <span class="text"></span></div>
+            <div class="four"> <span class="text"></span></div>
+        </div>
+
+    </div>
+    <div class="circle">
+        干饭魂
+    </div>
+</div>
+
+<script>
+    let wapper = document.querySelector(".wapper");
+
+    let textAll = document.querySelectorAll(".wapper .text");
+
+    let prize = ["自助","开发区","黄焖鸡","糁汤","小笼包","沙县","自助","开发区"];
+
+    // // 权重数组
+    // let prizeWeight = [1,1,1,1,1,1,1,1];
+    //
+    // //  权重之和
+    // let weightSum = prizeWeight.reduce(function(prevValue,curVal){
+    //     return prevValue + curVal;
+    // });
+
+
+    for(let i = 0 ; i < textAll.length ; i++){
+        textAll[i].innerHTML = prize[i];
+    }
+
+    let isFlag = true;
+
+    document.querySelector(".circle").onclick=function(){
+        console.log(123);
+        if(isFlag){
+            debugger;
+            // // 生成权重随机数
+            // let weightRandom = parseInt(Math.random()*30);
+            // // 合并
+            // let concatAfterArr = prizeWeight.concat(weightRandom);
+            // // 排序
+            // let  sortedWeightArr  = concatAfterArr.sort(function(a,b){ return a-b });
+            // var randomIndex = sortedWeightArr.indexOf(weightRandom);
+            // randomIndex = Math.min(randomIndex, prize.length -1);
+            let randomIndex=parseInt(Math.random()*7);
+
+            let text = prize[randomIndex];
+            console.log("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"+text);
+            switch(randomIndex){
+                case 0:
+                    run(22.5,text);
+                    break;
+                case 1:
+                    run(66.5,text);
+                    break;
+                case 2:
+                    run(112.5,text);
+                    break;
+                case 3:
+                    run(157.5,text);
+                    break;
+                case 4:
+                    run(338.5,text);
+                    break;
+                case 5:
+                    run(294.5,text);
+                    break;
+                case 6:
+                    run(247.5,text);
+                    break;
+                case 7:
+                    run(201.5,text);
+                    break;
+            }
+        }
+
+    };
+
+    function run(angle,text){
+        isFlag = false;
+        let begin = 0;
+        let timer = null;
+        let basic = 1800;
+        timer = setInterval(function(){
+            if(begin > (basic+angle)){
+                isFlag = true;
+                clearInterval(timer);
+            }
+            wapper.style.transform="rotate("+(begin)+"deg)";
+            begin+=Math.ceil(basic+angle-begin)*0.1;
+        },70);
+    }
+
+
+</script>
+
+</body>
+</html>

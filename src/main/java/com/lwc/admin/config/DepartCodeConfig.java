@@ -1,4 +1,4 @@
-package com.lwc.admin.Hystrix;
+package com.lwc.admin.config;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
@@ -13,4 +13,5 @@ public class DepartCodeConfig {
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
+
 }

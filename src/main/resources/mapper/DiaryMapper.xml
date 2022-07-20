@@ -4,6 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lwc.admin.mapper.DiaryMapper">
     <select id="getNote" resultType="com.lwc.admin.bean.Diary">
-        select title,content from diary order by id
+        select title,content from diary order by update_time desc
     </select>
 </mapper>
